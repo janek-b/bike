@@ -48,13 +48,13 @@ function initMap() {
   });
 }
 
-function updateMap(locations, mapCenter) {
+function updateMap(locations) {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
-    center: mapCenter
+    center: locations.center
   });
 
-  var markers = locations.map(function(location) {
+  var markers = locations.addresses.map(function(location) {
     return new google.maps.Marker({
       position: location
     });

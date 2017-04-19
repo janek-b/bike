@@ -6,6 +6,7 @@ function Location() {
 }
 
 Location.prototype.addAddress = function (address) {
+  this.addresses = [];
   var self = this;
   $.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+mapKey).then(function(response) {
     self.addresses.push(response.results[0].geometry.location);

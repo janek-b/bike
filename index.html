@@ -14,11 +14,27 @@
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <div class="form-group">
+
+          <div class="input-group">
             <input class="form-control" type="text" id="location" placeholder="Enter your location">
-            <button id="getBikesBtn" type="button" class="btn btn-primary">Find Bikes</button>
+            <span class="input-group-btn">
+              <button id="getBikesBtn" type="button" class="btn btn-primary">Find Bikes</button>
+            </span>
           </div>
-          <div>
+          <div class="input-group">
+            <input class="form-control" type="text" id="bikeId" placeholder="Enter bike Id">
+            <span class="input-group-btn">
+              <button id="getBikeId" type="button" class="btn btn-primary">Find Bikes</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <button id="previousPage" type="button" class="btn btn-default pull-left"><span class="glyphicon glyphicon-menu-left"></span></button>
+          <button id="nextPage" type="button" class="btn btn-default pull-right"><span class="glyphicon glyphicon-menu-right"></span></button>
+          <button id="collapseTable" type="button" class="btn btn-default center-block">Show/Hide</button>
+          <div id="tableSection">
             <table class="table table-bordered">
               <tr>
                 <th>Title</th>
@@ -35,11 +51,50 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
+          <br>
           <button type="button" class="btn btn-primary" id="locate">Get Location</button>
           <div id="map">
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="detailsModalLabel">Bike Details</h4>
+          </div>
+          <div class="modal-body">
+            <div id="bikeImg">
+            </div>
+            <h4 id="bikeTitle"></h4>
+            <p id="bikeDescription"></p>
+            <dl class="dl-horizontal">
+              <dt>Manufacturer</dt>
+              <dd id="bikeManufacturer"></dd>
+              <dt>Model</dt>
+              <dd id="bikeModel"></dd>
+              <dt>Year</dt>
+              <dd id="bikeYear"></dd>
+              <dt>Color</dt>
+              <dd id="bikeColor"></dd>
+              <dt>Serial</dt>
+              <dd id="bikeSerial"></dd>
+              <dt>Location Stolen</dt>
+              <dd id="bikeLocation"></dd>
+              <dt>Date Stolen</dt>
+              <dd id="bikeDate"></dd>
+            </dl>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </body>
 </html>
