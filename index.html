@@ -8,6 +8,38 @@
     <title>bike</title>
   </head>
   <body>
-
+    <div class="jumbotron">
+      <h1 class="text-center">Bikes</h1>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="form-group">
+            <input class="form-control" type="text" id="location" placeholder="Enter your location">
+            <button id="getBikesBtn" type="button" class="btn btn-primary">Find Bikes</button>
+          </div>
+          <div>
+            <table class="table table-bordered">
+              <tr>
+                <th>Title</th>
+                <th>Serial</th>
+                <th>Manufacturer</th>
+                <th>Location</th>
+                <th>Date Stolen</th>
+              </tr>
+              <tbody id="bikeData">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <button type="button" class="btn btn-primary" id="locate">Get Location</button>
+          <div id="map">
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
