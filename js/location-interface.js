@@ -43,14 +43,14 @@ function geolocationError(positionError) {
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
+    zoom: 11,
     center: {lat: 45.5230622, lng: -122.6764816}
   });
 }
 
 function updateMap(locations) {
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
+    zoom: 11,
     center: locations.center
   });
 

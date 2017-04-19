@@ -18,6 +18,7 @@ var displayStolenBikes = function(bikes) {
     });
   });
   $("#tableSection").slideDown();
+  resetBtn();
 }
 
 
@@ -42,11 +43,18 @@ var displayLocations = function(location) {
   }, 1000)
 }
 
+var resetBtn = function() {
+  $("#nextPage").html('<span class="glyphicon glyphicon-menu-right"></span>');
+  $("#previousPage").html('<span class="glyphicon glyphicon-menu-left"></span>');
+  $("#getBikesBtn").html('<span class="glyphicon glyphicon-search"></span>');
+}
+
 $(function() {
   var count = 1;
   var locationObject = new Location();
   var locationString = "";
   $("#getBikesBtn").click(function() {
+    $(this).html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>');
     locationString = $("#location").val();
     locationObject.getLatLng(locationString);
     $("#location").val("");
@@ -55,6 +63,7 @@ $(function() {
 
   $("#nextPage").click(function() {
     count ++;
+    $(this).html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>');
     bikeObject.getStolenBikes(locationString, count, displayStolenBikes, locationObject, displayLocations);
 
   })
@@ -62,6 +71,7 @@ $(function() {
   $("#previousPage").click(function() {
     if (count > 1) {
       count --;
+      $(this).html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>');
       bikeObject.getStolenBikes(locationString, count, displayStolenBikes, locationObject, displayLocations);
     }
   })
