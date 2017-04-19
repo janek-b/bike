@@ -14,11 +14,11 @@ Bike.prototype.getStolenBikes = function (location, count, displayStolenBikes, l
       stolenBike["manufacturer"] = bike.manufacturer_name;
       stolenBike["location"] = bike.stolen_location;
       stolenBike["date"] = moment(bike.date_stolen, "X").format("MMMM DD YYYY");
-      locationObject.addAddress(bike.stolen_location);
+      locationObject.addAddress(bike.stolen_location, displayLocations);
       output.push(stolenBike);
     })
     displayStolenBikes(output);
-    displayLocations(locationObject);
+    // displayLocations(locationObject);
   })
 };
 

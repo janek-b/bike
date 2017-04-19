@@ -38,9 +38,9 @@ var displayModal = function(bikeDetails) {
 }
 
 var displayLocations = function(location) {
-  var wait = setTimeout(function() {
+  // var wait = setTimeout(function() {
     updateMap(location);
-  }, 1000)
+  // }, 1000)
 }
 
 var resetBtn = function() {
