@@ -1,13 +1,11 @@
 var mapKey = require('../.env').mapKey;
 
 $(function() {
-  $.getScript("http://maps.google.com/maps/api/js?key="+mapKey);
   $.getScript("https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js");
-  $('#locate').click(locateUser);
-  var wait = setTimeout(function() {
+  $.getScript("http://maps.google.com/maps/api/js?key="+mapKey, function() {
     initMap();
-  }, 100);
-
+  });
+  $('#locate').click(locateUser);
 });
 
 function locateUser() {
@@ -48,13 +46,13 @@ function initMap() {
   });
 }
 
-function updateMap(locations) {
+function updateMap(locations, mapCenter) {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 11,
-    center: locations.center
+    center: mapCenter
   });
 
-  var markers = locations.addresses.map(function(location) {
+  var markers = locations.map(function(location) {
     return new google.maps.Marker({
       position: location
     });

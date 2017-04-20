@@ -3,8 +3,8 @@ var mapKey = require('../.env').mapKey;
 function Bike() {
 }
 
-Bike.prototype.getStolenBikes = function (location, count, displayStolenBikes, locationObject, displayLocations) {
-  $.get('http://bikeindex.org/api/v3/search?page=' + count+'&per_page=25&location='+location+'&distance=10&stolenness=proximity').then(function(response) {
+Bike.prototype.getStolenBikes = function (location, count) {
+  return $.get('http://bikeindex.org/api/v3/search?page=' + count+'&per_page=25&location='+location+'&distance=10&stolenness=proximity').then(function(response) {
     var output = [];
     response.bikes.forEach(function(bike) {
       var stolenBike = {};
@@ -14,16 +14,14 @@ Bike.prototype.getStolenBikes = function (location, count, displayStolenBikes, l
       stolenBike["manufacturer"] = bike.manufacturer_name;
       stolenBike["location"] = bike.stolen_location;
       stolenBike["date"] = moment(bike.date_stolen, "X").format("MMMM DD YYYY");
-      locationObject.addAddress(bike.stolen_location, displayLocations);
       output.push(stolenBike);
-    })
-    displayStolenBikes(output);
-    // displayLocations(locationObject);
+    });
+    return output;
   })
 };
 
-Bike.prototype.getBikeDetails = function (id, displayModal) {
-  $.get('http://bikeindex.org/api/v3/bikes/'+id).then(function(response) {
+Bike.prototype.getBikeDetails = function (id) {
+  return $.get('http://bikeindex.org/api/v3/bikes/'+id).then(function(response) {
     var bikeDetails = {};
     bikeDetails["title"] = response.bike.title;
     bikeDetails["serial"] = response.bike.serial;
@@ -35,8 +33,7 @@ Bike.prototype.getBikeDetails = function (id, displayModal) {
     bikeDetails["location"] = response.bike.stolen_location;
     bikeDetails["date"] = moment(response.bike.date_stolen, "X").format("MMMM DD YYYY");
     bikeDetails["description"] = response.bike.description;
-
-    displayModal(bikeDetails);
+    return bikeDetails;
   })
 };
 

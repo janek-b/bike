@@ -1,18 +1,15 @@
 var mapKey = require('../.env').mapKey;
 
 function Location() {
-  this.addresses = [];
   this.center;
 }
 
-Location.prototype.addAddress = function (address, displayLocations) {
-  var self = this;
-  $.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+mapKey).then(function(response) {
-    self.addresses.push(response.results[0].geometry.location);
-    displayLocations(self);
-  }).fail(function(error) {
-    console.log(error.responseJSON.message);
-  })
+Location.prototype.codeAddress = function (address) {
+  return new Promise((resolve, reject) => {
+    $.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+mapKey).then(function(response) {
+      resolve(response.results[0].geometry.location);
+    });
+  });
 };
 
 Location.prototype.getLatLng = function (address) {

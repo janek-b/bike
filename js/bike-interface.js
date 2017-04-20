@@ -14,14 +14,14 @@ var displayStolenBikes = function(bikes) {
     "<td>"+bike["date"]+"</td>"+
     "</tr>");
     $("#bikeData .details").last().click(function() {
-      bikeObject.getBikeDetails($(this).attr("data-id"), displayModal)
+      bikeObject.getBikeDetails($(this).attr("data-id")).done(function(details) {
+        displayModal(details);
+      })
     });
   });
   $("#tableSection").slideDown();
   resetBtn();
 }
-
-
 
 var displayModal = function(bikeDetails) {
   $("#bikeImg").html("<img src='"+bikeDetails.img+"'>");
@@ -37,12 +37,6 @@ var displayModal = function(bikeDetails) {
   $("#detailsModal").modal();
 }
 
-var displayLocations = function(location) {
-  // var wait = setTimeout(function() {
-    updateMap(location);
-  // }, 1000)
-}
-
 var resetBtn = function() {
   $("#nextPage").html('<span class="glyphicon glyphicon-menu-right"></span>');
   $("#previousPage").html('<span class="glyphicon glyphicon-menu-left"></span>');
@@ -53,26 +47,38 @@ $(function() {
   var count = 1;
   var locationObject = new Location();
   var locationString = "";
+
+  var update = function() {
+    bikeObject.getStolenBikes(locationString, count).done(function(output) {
+      var locations = output.map(function(location) {
+        return location.location;
+      }).map(locationObject.codeAddress);
+      Promise.all(locations).then(locations => {
+        updateMap(locations, locationObject.center);
+      });
+      displayStolenBikes(output);
+    });
+  }
+
   $("#getBikesBtn").click(function() {
     $(this).html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>');
     locationString = $("#location").val();
     locationObject.getLatLng(locationString);
     $("#location").val("");
-    bikeObject.getStolenBikes(locationString, count, displayStolenBikes, locationObject, displayLocations);
+    update();
   });
 
   $("#nextPage").click(function() {
     count ++;
     $(this).html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>');
-    bikeObject.getStolenBikes(locationString, count, displayStolenBikes, locationObject, displayLocations);
-
+    update();
   })
 
   $("#previousPage").click(function() {
     if (count > 1) {
       count --;
       $(this).html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>');
-      bikeObject.getStolenBikes(locationString, count, displayStolenBikes, locationObject, displayLocations);
+      update();
     }
   })
 
