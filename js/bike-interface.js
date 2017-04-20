@@ -50,9 +50,7 @@ $(function() {
 
   var update = function() {
     bikeObject.getStolenBikes(locationString, count).done(function(output) {
-      var locations = output.map(function(location) {
-        return location.location;
-      }).map(locationObject.codeAddress);
+      var locations = output.map(location => location.location).map(locationObject.codeAddress);
       Promise.all(locations).then(locations => {
         updateMap(locations, locationObject.center);
       });
