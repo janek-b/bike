@@ -43,6 +43,41 @@ var resetBtn = function() {
   $("#getBikesBtn").html('<span class="glyphicon glyphicon-search"></span>');
 }
 
+var displayChart = function(bikeData) {
+  Highcharts.chart('chart', {
+    chart: {
+      type: 'line'
+    },
+    title: {
+      text: 'Bike thefts per day'
+    },
+    xAxis: {
+      type: 'category',
+    },
+    yAxis: {
+      title: {
+        text: 'Number of Bike thefts'
+      },
+      min: 0
+    },
+    tooltip: {
+      headerFormat: '<b>{series.name}</b><br>',
+      pointFormat: '{point.x:%e. %b}: {point.y:.2f}'
+    },
+    plotOptions: {
+      line: {
+        marker: {
+          enabled: true
+        }
+      }
+    },
+    series: [{
+      name: 'Bike Thefts',
+      data: bikeData
+    }]
+  });
+}
+
 $(function() {
   var count = 1;
   var locationObject = new Location();
@@ -56,6 +91,10 @@ $(function() {
       });
       displayStolenBikes(output);
     });
+    bikeObject.getStolenDate(locationString).done(function(output){
+      var test = Object.entries(output)
+      displayChart(test);
+    })
   }
 
   $("#getBikesBtn").click(function() {

@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="build/css/vendor.css">
     <link rel="stylesheet" href="build/css/styles.css">
     <script src="build/js/vendor.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script type="text/javascript" src="build/js/app.js"></script>
     <title>bike</title>
   </head>
@@ -18,7 +20,7 @@
               </div>
               <div class="col-md-6">
                 <div class="input-group">
-                  <input class="form-control" type="text" id="location" placeholder="Enter your location">
+                  <input class="form-control" type="text" id="location" placeholder="Enter your location" value="97201">
                   <span class="input-group-btn">
                     <button id="getBikesBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
                   </span>
@@ -55,6 +57,9 @@
           </div>
           <br>
           <button type="button" class="btn btn-primary center-block" id="locate">Get Location</button>
+          <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto">
+
+          </div>
         </div>
       </div>
     </div>

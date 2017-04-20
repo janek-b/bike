@@ -37,4 +37,11 @@ Bike.prototype.getBikeDetails = function (id) {
   })
 };
 
+Bike.prototype.getStolenDate = function (location) {
+  return $.get('http://bikeindex.org/api/v3/search?page=1&per_page=100&location=' + location + '&distance=10&stolenness=proximity').then(function(response) {
+    return response.bikes.map(bike => moment.unix(bike.date_stolen).format("MMMM DD YYYY"))
+      .reduce((countMap, date) => (countMap[date] = ++countMap[date] || 1, countMap), {});
+  })
+};
+
 exports.bikeModule = Bike;
