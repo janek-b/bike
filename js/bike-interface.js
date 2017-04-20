@@ -7,17 +7,12 @@ var displayStolenBikes = function(bikes) {
   $("#bikeData").empty();
   bikes.forEach(function(bike) {
     $("#bikeData").append("<tr>" +
-    "<td>"+bike["title"]+"<span data-id='"+bike["id"]+"' class='label label-primary details pull-right'>Details</span></td>"+
+    "<td>"+bike["title"]+"<button type='button' class='btn btn-xs btn-primary pull-right' data-toggle='modal' data-target='#detailsModal' data-id='"+bike["id"]+"'>Get Details</button></td>"+
     "<td>"+bike["serial"]+"</td>"+
     "<td>"+bike["manufacturer"]+"</td>"+
     "<td>"+bike["location"]+"</td>"+
     "<td>"+bike["date"]+"</td>"+
     "</tr>");
-    $("#bikeData .details").last().click(function() {
-      bikeObject.getBikeDetails($(this).attr("data-id")).done(function(details) {
-        displayModal(details);
-      })
-    });
   });
   $("#tableSection").slideDown();
   resetBtn();
@@ -34,7 +29,6 @@ var displayModal = function(bikeDetails) {
   $("#bikeSerial").text(bikeDetails.serial);
   $("#bikeLocation").text(bikeDetails.location);
   $("#bikeDate").text(bikeDetails.date);
-  $("#detailsModal").modal();
 }
 
 var resetBtn = function() {
@@ -87,7 +81,8 @@ $(function() {
     bikeObject.getStolenBikes(locationString, count).done(function(output) {
       var locations = output.map(location => location.location).map(locationObject.codeAddress);
       Promise.all(locations).then(addresses => {
-        updateMap(addresses, locationObject.center);
+        var zipped = output.map((bike, i) => [bike.id, addresses[i]]);
+        updateMap(zipped, locationObject.center);
       });
       displayStolenBikes(output);
     });
@@ -121,5 +116,13 @@ $(function() {
 
   $("#collapseTable").click(function() {
     $("#tableSection").slideToggle();
+  })
+
+  $("#detailsModal").on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget);
+    var bikeId = button.data('id');
+    bikeObject.getBikeDetails(bikeId).done(function(details) {
+      displayModal(details);
+    })
   })
 })

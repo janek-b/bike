@@ -53,9 +53,16 @@ function updateMap(locations, mapCenter) {
   });
 
   var markers = locations.map(function(location) {
-    return new google.maps.Marker({
-      position: location
+    var infowindow = new google.maps.InfoWindow({
+      content: '<button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detailsModal" data-id="'+location[0]+'">Get Details</button>'
     });
+    var marker = new google.maps.Marker({
+      position: location[1]
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+    return marker;
   });
 
   var marketCluster = new MarkerClusterer(map, markers,
