@@ -5,10 +5,8 @@ function Location() {
 }
 
 Location.prototype.codeAddress = function (address) {
-  return new Promise((resolve, reject) => {
-    $.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+mapKey).then(function(response) {
-      resolve(response.results[0].geometry.location);
-    });
+  return $.get('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+mapKey).then(function(response) {
+    return response.results[0].geometry.location;
   });
 };
 
